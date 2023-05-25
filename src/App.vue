@@ -1,24 +1,31 @@
-<script setup lang="ts"></script>
-
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">
-          Home
-        </RouterLink>
-        <RouterLink to="/about">
-          About
-        </RouterLink>
-      </nav>
-
-      <div class="bg-red-200 font-semibold">
-        Tailwind
-      </div>
-    </div>
-  </header>
-
-  <RouterView />
+  <component :is="currentLayout" />
 </template>
 
-<style scoped></style>
+<script setup lang="ts">
+import { defineAsyncComponent, computed } from 'vue';
+import { useRoute } from 'vue-router'
+
+const DefaultLayout = defineAsyncComponent(() => import('@/layouts/DefaultLayout.vue'));
+const FullPageLayout = defineAsyncComponent(() => import('@/layouts/FullPageLayout.vue'));
+
+const $route = useRoute()
+
+interface LayoutComponents {
+  [key: string]: typeof DefaultLayout | undefined
+}
+
+const layoutComponents: LayoutComponents = {
+  default: DefaultLayout,
+  fullpage: FullPageLayout,
+  //third: ThirdLayout,
+  // Add more layout components as needed
+};
+
+const currentLayout = computed(() => {
+  const layout = $route.meta.layout || 'default'; // Use the default layout if no layout is specified
+  return layoutComponents[layout as string] || DefaultLayout;
+});
+
+
+</script>

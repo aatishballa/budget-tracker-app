@@ -1,21 +1,58 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      alias: '/dashboard',
+      name: 'dashboard',
+      component: () => import('../views/DashboardPage.vue'),
+      meta: {
+        title: 'Dashboard',
+        layout: 'default',
+        requiresAuth: true
+      }
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      path: '/activity',
+      name: 'activity',
+      component: () => import('../views/ActivityPage.vue'),
+      meta: {
+        title: 'Activity',
+        layout: 'default',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/add',
+      name: 'Add',
+      component: () => import('../views/ReportsPage.vue'),
+      meta: {
+        title: 'Add',
+        layout: 'default',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/reports',
+      name: 'reports',
+      component: () => import('../views/ReportsPage.vue'),
+      meta: {
+        title: 'Reports',
+        layout: 'default',
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/SettingsPage.vue'),
+      meta: {
+        title: 'Settings',
+        layout: 'default',
+        requiresAuth: true
+      }
     }
   ]
 })

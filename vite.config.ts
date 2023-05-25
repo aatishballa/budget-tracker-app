@@ -10,5 +10,11 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    port: 8000
+  },
+  optimizeDeps: {
+    exclude: ["oh-vue-icons/icons"]
   }
 })
